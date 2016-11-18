@@ -132,8 +132,7 @@ int main()
 		texDemoPipe.shader = &simpleShader;
 
 		// TODO: Create and load the 2D RGB8 texture "world.png"
-		Texture tex1(Texture::Layout::TEX_2D,InternalFormat::RGB8);
-		tex1.load("../world.png", 0, true);
+		Texture tex1(InternalFormat::RGB8, "../world.png");
 
 		// TODO: Create and load the cube map RGB8 texture "sky".
 		// To load a cube map create the texture object first and call
@@ -184,10 +183,8 @@ int main()
 			context.setState(texDemoPipe);
 
 			// TODO: Bind the two textures (world to 0 and sky to 1)
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(static_cast<GLenum>(Texture::Layout::TEX_2D), tex1.glID());
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(static_cast<GLenum>(Texture::Layout::TEX_2D), tex2.glID());
+			tex1.bindAsTexture(0);
+			tex2.bindAsTexture(1);
 
 			// Draw some vertices. Even though there is no buffer the vertex shader
 			// will be called 3 times. Then, positions are generated inside the shader.
