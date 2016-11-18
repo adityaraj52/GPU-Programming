@@ -157,28 +157,28 @@ int main()
 		};
 		std::vector<SamplerState> samplers;
 		// TODO: Create the four sampler states as described by SAMPLER_NAMES.
+		/*
 		SamplerState s1(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE);
 		SamplerState s2(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST);
 		SamplerState s3(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR);
 		SamplerState s4(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR);
-
+		*/
 
 		// Use samplers.push_back(SamplerState(...)) to add these states into the samplers array.
-		samplers.push_back(s1);
-		samplers.push_back(s2);
-		samplers.push_back(s3);
-		samplers.push_back(s4);
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE));
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST));
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR));
+		samplers.push_back(SamplerState(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR));
 
 		
 		float maxAnisotropy = 1.0f;
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
 		// TODO: Create the same four samplers but use the maxAnisotropy this 
-		/*
-		SamplerState s5(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE, maxAnisotropy);
-		SamplerState s6(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, maxAnisotropy);
-		SamplerState s7(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
-		SamplerState s8(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
-		*/
+		SamplerState s1(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE, maxAnisotropy);
+		SamplerState s2(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, maxAnisotropy);
+		SamplerState s3(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
+		SamplerState s4(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
+
 		// Main loop
 		float time = 0.0f;
 		while(window.isOpen())

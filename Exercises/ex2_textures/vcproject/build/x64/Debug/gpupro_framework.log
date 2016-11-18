@@ -1,3 +1,15 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (C:\Users\adityaraj\OneDrive\GPU\Exercises\ex2_textures\vcproject\build\x64\Debug\) contains files shared from another project (demo_textures.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (C:\Users\adityaraj\OneDrive\GPU-Programming\Exercises\ex2_textures\vcproject\build\x64\Debug\) contains files shared from another project (demo_textures.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  glad.c
+  vertexformat.cpp
   texture.cpp
-  gpupro_framework.vcxproj -> C:\Users\adityaraj\OneDrive\GPU\Exercises\ex2_textures\vcproject\..\bin\x64\Debug\gpupro_framework.lib
+  shader.cpp
+  query.cpp
+  program.cpp
+  pipeline.cpp
+  objloader.cpp
+  model.cpp
+  format.cpp
+  context.cpp
+  buffer.cpp
+  Generating Code...
+  gpupro_framework.vcxproj -> C:\Users\adityaraj\OneDrive\GPU-Programming\Exercises\ex2_textures\vcproject\..\bin\x64\Debug\gpupro_framework.lib
