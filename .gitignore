@@ -1,0 +1,16 @@
+_Store
+!.gitignore
+!.gitmodules
+!*.java
+!*.jcm
+!*.xml
+!*.png
+!*.svg
+!*.properties
+!*.classpath
+!*.project
+!*.json
+!*.asl
+!*.pdf
+!*.m
+

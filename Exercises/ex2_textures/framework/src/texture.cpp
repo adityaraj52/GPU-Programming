@@ -104,7 +104,7 @@ void gpupro::Texture::load(const char* _fileName, GLuint _layer, bool _generateM
 		if(m_id) {
 			// The texture already has a memory, which is immutable -> create
 			// entire new texture.
-			glTexImage2D(static_cast<GLenum>(m_layout), m_numMipLevels, static_cast<GLenum>(m_format), width, height, 0, GL_RGB, GL_FLOAT, textureData);
+			glTexStorage2D(static_cast<GLenum>(m_layout), m_numMipLevels, static_cast<GLenum>(m_format), width, height);
 			*this = std::move(Texture(m_layout, width, height, m_format, _generateMipMaps ? 0 : 1));
 		} else {
 			// Texture was created without allocation
@@ -138,12 +138,12 @@ void gpupro::Texture::setData(GLuint _mipLevel, GLuint _layer, SetDataFormat _fo
 	case Layout::TEX_2D:
 		// TODO: Use glTexSubImage2D to upload the 2D texture.
 		// The size can be taken from m_size[0] and m_size[1].
-		glTexSubImage2D(static_cast<GLenum>(m_layout), m_numMipLevels, 0, 0, width(), height(), static_cast<GLenum>(m_format), GL_FLOAT, _data);
+		glTexSubImage2D(static_cast<GLenum>(m_layout), m_numMipLevels, 0, 0, width(), height(), static_cast<GLenum>(m_format), static_cast<GLenum>(_type), _data);
 		break;
 	case Layout::CUBE_MAP:
 		// TODO: Use glTexSubImage2D to upload the face of the cube map.
 		// As target use 'GL_TEXTURE_CUBE_MAP_POSITIVE_X + _layer'.
-		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + _layer, m_numMipLevels, 0, 0, width(), height(), static_cast<GLenum>(m_format), GL_FLOAT, _data);
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + _layer, m_numMipLevels, 0, 0, width(), height(), static_cast<GLenum>(m_format), static_cast<GLenum>(_type), _data);
 		break;
 	}
 }

@@ -40,7 +40,7 @@ gpupro::SamplerState::SamplerState(
 
 	if (_maxAnisotropy > 1.0f)
 		// TODO: Set the max-anisotropy (GL_TEXTURE_MAX_ANISOTROPY_EXT)
-		GL_TEXTURE_MAX_ANISOTROPY_EXT;
+		_maxAnisotropy= (GL_TEXTURE_MAX_ANISOTROPY_EXT);
 
 	if(_depthCmpFunc != DepthCompareFunc::DISABLE)
 	{

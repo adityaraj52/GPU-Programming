@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+
 using namespace gpupro;
 using namespace glm;
 
@@ -132,20 +133,20 @@ int main()
 
 		// TODO: Create and load the 2D RGB8 texture "world.png"
 		Texture tex1(Texture::Layout::TEX_2D,InternalFormat::RGB8);
-		tex1.load("world.png");
+		tex1.load("../world.png", 0, true);
 
 		// TODO: Create and load the cube map RGB8 texture "sky".
 		// To load a cube map create the texture object first and call
 		// load() six times. The second parameter _layer lets you
 		// specify into which cubemap face the file is loaded. Load
 		// xpos to 0, xneg to 1, ypos to 2, ....
-		Texture tex2(Texture::Layout::TEX_2D, InternalFormat::RGB8);
-		tex2.load("sky",0);
-		tex2.load("sky",1);
-		tex2.load("sky",2);
-		tex2.load("sky",3);
-		tex2.load("sky",4);
-		tex2.load("sky",5);
+		Texture tex2(Texture::Layout::CUBE_MAP, InternalFormat::RGB8);
+		tex2.load("../sky/xpos.png",0);
+		tex2.load("../sky/xneg.png",1);
+		tex2.load("../sky/ypos.png",2);
+		tex2.load("../sky/yneg.png",3);
+		tex2.load("../sky/zpos.png",4);
+		tex2.load("../sky/zneg.png",5);
 
 
 		// Create some samplers
@@ -157,12 +158,6 @@ int main()
 		};
 		std::vector<SamplerState> samplers;
 		// TODO: Create the four sampler states as described by SAMPLER_NAMES.
-		/*
-		SamplerState s1(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE);
-		SamplerState s2(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST);
-		SamplerState s3(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR);
-		SamplerState s4(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR);
-		*/
 
 		// Use samplers.push_back(SamplerState(...)) to add these states into the samplers array.
 		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE));
@@ -173,11 +168,13 @@ int main()
 		
 		float maxAnisotropy = 1.0f;
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
-		// TODO: Create the same four samplers but use the maxAnisotropy this 
-		SamplerState s1(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE, maxAnisotropy);
-		SamplerState s2(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, maxAnisotropy);
-		SamplerState s3(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
-		SamplerState s4(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy);
+		// TODO: Create the same four samplers but use the maxAnisotropy this time
+		
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NONE, maxAnisotropy));
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, SamplerState::Filter::NEAREST, maxAnisotropy));
+		samplers.push_back(SamplerState(SamplerState::Filter::NEAREST, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy));
+		samplers.push_back(SamplerState(SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, SamplerState::Filter::LINEAR, maxAnisotropy));
+	
 
 		// Main loop
 		float time = 0.0f;
@@ -187,8 +184,10 @@ int main()
 			context.setState(texDemoPipe);
 
 			// TODO: Bind the two textures (world to 0 and sky to 1)
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindTexture(GL_TEXTURE_2D, 1);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(static_cast<GLenum>(Texture::Layout::TEX_2D), tex1.glID());
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(static_cast<GLenum>(Texture::Layout::TEX_2D), tex2.glID());
 
 			// Draw some vertices. Even though there is no buffer the vertex shader
 			// will be called 3 times. Then, positions are generated inside the shader.
