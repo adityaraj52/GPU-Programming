@@ -36,8 +36,6 @@ gpupro::SamplerState::SamplerState(
 	// I.e. _minFilter and _mipFilter inputs must be combined to a single
 	// value. For example GL_NEAREST_MIPMAP_NEAREST.
 
-	glSamplerParameteri(m_id, GL_TEXTURE_MAG_FILTER, static_cast<GLint>(_magFilter));
-
 	if(_minFilter==Filter::NEAREST && _mipFilter==Filter::NEAREST)
 		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 
@@ -49,6 +47,8 @@ gpupro::SamplerState::SamplerState(
 	
 	if (_minFilter == Filter::LINEAR && _mipFilter == Filter::LINEAR)
 		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	glSamplerParameteri(m_id, GL_TEXTURE_MAG_FILTER, static_cast<GLint>(_magFilter));
 
 	if (_maxAnisotropy > 1.0f)
 		// TODO: Set the max-anisotropy (GL_TEXTURE_MAX_ANISOTROPY_EXT)
