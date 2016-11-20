@@ -39,6 +39,12 @@ gpupro::SamplerState::SamplerState(
 	if(_minFilter==Filter::NEAREST && _mipFilter==Filter::NEAREST)
 		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 
+	if (_minFilter == Filter::NEAREST && _mipFilter == Filter::NONE)
+		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	if (_minFilter == Filter::LINEAR && _mipFilter == Filter::NONE)
+		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
 	if (_minFilter == Filter::LINEAR && _mipFilter == Filter::NEAREST)
 		glSamplerParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	
@@ -52,7 +58,7 @@ gpupro::SamplerState::SamplerState(
 
 	if (_maxAnisotropy > 1.0f)
 		// TODO: Set the max-anisotropy (GL_TEXTURE_MAX_ANISOTROPY_EXT)
-		_maxAnisotropy= (GL_TEXTURE_MAX_ANISOTROPY_EXT);
+		glSamplerParameterf(m_id, GL_TEXTURE_MAX_ANISOTROPY_EXT, _maxAnisotropy);
 
 	if(_depthCmpFunc != DepthCompareFunc::DISABLE)
 	{

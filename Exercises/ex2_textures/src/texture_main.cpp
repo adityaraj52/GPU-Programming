@@ -112,7 +112,6 @@ int main()
 		<< "  R:          toggle rotation\n"
 		<< "  Left/Right: change the used sampler\n\n";
 
-	try {
 		DemoWindow window(1024, 1024, "Ex2: Textures");
 		OGLContext context(OGLContext::DebugSeverity::MEDIUM);
 		window.setKeyCallback(keyFunc);
@@ -132,7 +131,7 @@ int main()
 		texDemoPipe.shader = &simpleShader;
 
 		// TODO: Create and load the 2D RGB8 texture "world.png"
-		Texture tex1(InternalFormat::RGB8, "../world.png");
+		Texture tex1(InternalFormat::RGB8, "world.png");
 
 		// TODO: Create and load the cube map RGB8 texture "sky".
 		// To load a cube map create the texture object first and call
@@ -140,12 +139,12 @@ int main()
 		// specify into which cubemap face the file is loaded. Load
 		// xpos to 0, xneg to 1, ypos to 2, ....
 		Texture tex2(Texture::Layout::CUBE_MAP, InternalFormat::RGB8);
-		tex2.load("../sky/xpos.png",0);
-		tex2.load("../sky/xneg.png",1);
-		tex2.load("../sky/ypos.png",2);
-		tex2.load("../sky/yneg.png",3);
-		tex2.load("../sky/zpos.png",4);
-		tex2.load("../sky/zneg.png",5);
+		tex2.load("sky/xpos.png",0);
+		tex2.load("sky/xneg.png",1);
+		tex2.load("sky/ypos.png",2);
+		tex2.load("sky/yneg.png",3);
+		tex2.load("sky/zpos.png",4);
+		tex2.load("sky/zneg.png",5);
 
 
 		// Create some samplers
@@ -183,8 +182,8 @@ int main()
 			context.setState(texDemoPipe);
 
 			// TODO: Bind the two textures (world to 0 and sky to 1)
-			tex1.bindAsTexture(0);
-			tex2.bindAsTexture(1);
+			tex1.bindAsTexture(GL_TEXTURE0);
+			tex2.bindAsTexture(GL_TEXTURE1);
 
 			// Draw some vertices. Even though there is no buffer the vertex shader
 			// will be called 3 times. Then, positions are generated inside the shader.
@@ -203,10 +202,6 @@ int main()
 
 			if(s_rotating) time += 0.001f;
 		}
-	} catch(std::exception _ex) {
-		std::cerr << "ERR: " << _ex.what();
-		return 1;
-	}
 
 	return 0;
 }
